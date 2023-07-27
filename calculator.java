@@ -2,17 +2,37 @@ import java.util.Scanner;
 
 public class calculator{
 
+    static Scanner scnr = new Scanner(System.in);
+
     static int n1,n2;
     static float ris;
     static char op;
     public static void main(String[] args){
-        input();
-        calculate();
-        print_result();
+
+        char c;
+
+        do {
+            input();
+            calculate();
+            print_result();
+
+            do {
+                System.out.print("Do you want to use the calculator again?(y/n): ");
+                c = scnr.next().charAt(0);
+
+                if(c != 'y' && c != 'Y' && c != 'n' && c != 'N' ){
+                    wrong_input_error();
+                }
+
+                clear_screen();
+            } while (c != 'y' && c != 'Y' && c != 'n' && c != 'N');
+
+        } while (c == 'y' || c == 'Y' );
+
+        scnr.close();
     }
 
     static void input(){
-        Scanner scnr = new Scanner(System.in);
 
         //input of variables
         System.out.print("Enter the first number: ");
@@ -23,11 +43,9 @@ public class calculator{
 
         select_operation();
 
-        scnr.close();
     }
 
     static void select_operation(){
-        Scanner scnr = new Scanner(System.in);
         
         do {
             clear_screen();
@@ -42,14 +60,18 @@ public class calculator{
             op = scnr.next().charAt(0);
 
             if(op != '+' && op != '-' && op != '*' && op != '/'){
-                System.out.print("\nError, wrong input, press enter to continue... ");
-                scnr.nextLine();
-                scnr.nextLine();
+                wrong_input_error();
             }
 
         } while (op != '+' && op != '-' && op != '*' && op != '/' );
 
-        scnr.close();
+    }
+
+    static void wrong_input_error(){
+        System.out.print("\nError, wrong input, press enter to continue... ");
+        scnr.nextLine();
+        scnr.nextLine();
+
     }
 
     static void clear_screen(){
